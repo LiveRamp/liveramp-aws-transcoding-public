@@ -1,23 +1,3 @@
-<p style="color: red; font-weight: bold">>>>>>  gd2md-html alert:  ERRORs: 0; WARNINGs: 0; ALERTS: 13.</p>
-<ul style="color: red; font-weight: bold"><li>See top comment block for details on ERRORs and WARNINGs. <li>In the converted Markdown or HTML, search for inline alerts that start with >>>>>  gd2md-html alert:  for specific instances that need correction.</ul>
-
-<p style="color: red; font-weight: bold">Links to alert messages:</p><a href="#gdcalert1">alert1</a>
-<a href="#gdcalert2">alert2</a>
-<a href="#gdcalert3">alert3</a>
-<a href="#gdcalert4">alert4</a>
-<a href="#gdcalert5">alert5</a>
-<a href="#gdcalert6">alert6</a>
-<a href="#gdcalert7">alert7</a>
-<a href="#gdcalert8">alert8</a>
-<a href="#gdcalert9">alert9</a>
-<a href="#gdcalert10">alert10</a>
-<a href="#gdcalert11">alert11</a>
-<a href="#gdcalert12">alert12</a>
-<a href="#gdcalert13">alert13</a>
-
-<p style="color: red; font-weight: bold">>>>>> PLEASE check and correct alert issues and delete this message and the inline alerts.<hr></p>
-
-
 
 ## AWS Embedded Transcoder Deployment Guide
 
@@ -108,7 +88,7 @@ The LiveRamp Embedded Transcoder is deployed by running a CloudFormation templat
 <p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image1.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image1.png "image_tooltip")
+![Figure 1](Images/image1.png)
 
 
 **Figure 1**. _AWS Transcoder system diagram._
@@ -123,7 +103,7 @@ Figure 2 below shows the steps involved in authentication and initialization of 
 <p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image2.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image2.png "image_tooltip")
+![Figure 2](Images/image2.png)
 
 
 **Figure 2**. _Authentication and initialization of the transcoding process_.
@@ -135,7 +115,7 @@ In Figure 3 below the actual request, the process is illustrated. Authentication
 <p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image3.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image3.png "image_tooltip")
+![Figure 3](Images/image3.png "image_tooltip")
 
 
 **Figure 3**. _A schematic of the transcode request process_.
@@ -147,7 +127,7 @@ Figure 4 below shows the schematic for a refresh request.
 <p id="gdcalert4" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image4.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert5">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image4.png "image_tooltip")
+![Figure 4](Images/image4.png "image_tooltip")
 
 
 **Figure 4**. _The transcode refresh request process_.
@@ -176,7 +156,7 @@ To deploy the AWS Embedded Transcoder, do the following:
 <p id="gdcalert5" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image5.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert6">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image5.png "image_tooltip")
+![Figure 5](Images/image5.png "image_tooltip")
 
 
 **Figure 5**. _Open the CloudFormation Stacks section to use the deployment template_.
@@ -191,7 +171,7 @@ To deploy the AWS Embedded Transcoder, do the following:
 <p id="gdcalert6" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image6.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert7">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image6.png "image_tooltip")
+![Figure 6](Images/image6.png "image_tooltip")
 
 
 **Figure 6**. _The CloudFormation Create stack page_.
@@ -205,7 +185,7 @@ To deploy the AWS Embedded Transcoder, do the following:
 <p id="gdcalert7" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image7.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert8">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image7.png "image_tooltip")
+![Figure 7](Images/image7.png "image_tooltip")
 
 
 **Figure 7**. _The Specify stack details step is where you name your deployment_.
@@ -220,7 +200,7 @@ To deploy the AWS Embedded Transcoder, do the following:
 <p id="gdcalert8" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image8.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert9">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image8.png "image_tooltip")
+![Figure 8](Images/image8.png "image_tooltip")
 
 
 **Figure 8**._ Enable the acknowledgment and click the Create stack button to initiate the deployment._
@@ -237,7 +217,7 @@ When the deployment is complete all of the resources will show a CREATE_COMPLETE
 <p id="gdcalert9" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image9.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert10">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image9.png "image_tooltip")
+![Figure 9](Images/image9.png "image_tooltip")
 
 
 **Figure 9**. _All of the completed resources for the transcoder deployment are shown here_.
@@ -253,7 +233,7 @@ To determine the transcoder endpoints from the AWS API Gateway:
 <p id="gdcalert10" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image10.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert11">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image10.png "image_tooltip")
+![Figure 10](Images/image10.png "image_tooltip")
 
 
 **Figure 10**. _Select the transcoder deployment in AWS API Gateway to open the endpoint’s methods._
@@ -267,7 +247,7 @@ To determine the transcoder endpoints from the AWS API Gateway:
 <p id="gdcalert11" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image11.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert12">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image11.png "image_tooltip")
+![Figure 11](Images/image11.png "image_tooltip")
 
 
 **Figure 11**. _The installed endpoints for the transcoder_.
@@ -284,7 +264,7 @@ To determine the transcoder endpoints from the AWS API Gateway:
 <p id="gdcalert12" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image12.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert13">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image12.png "image_tooltip")
+![Figure 12](Images/image12.png "image_tooltip")
 
 
 **Figure 12**. _The Invoke URL endpoint appears in the Stages section for each method_.
@@ -304,7 +284,7 @@ To delete the transcoder deployment:
 <p id="gdcalert13" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image13.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert14">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image13.png "image_tooltip")
+![Figure 13](Images/image13.png "image_tooltip")
 
 
 **Figure 13**. _To delete the transcoder, delete its stack in CloudFormation_.
