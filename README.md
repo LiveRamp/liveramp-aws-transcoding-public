@@ -3,7 +3,7 @@ LiveRamp’s Embedded Transcoder allows for the conversion of RampID from one en
 
 LiveRamp’s AWS Embedded Transcoder deployment invokes [SageMaker’s network isolation mode](https://aws.amazon.com/blogs/security/secure-deployment-of-amazon-sagemaker-resources/) on the appliance, protecting your VPC and deployed LiveRamp technology. The system design forces all interactions between the encryption technology and your VPC through a proxy service.  This proxy also handles authentication requirements and updates to the appliance.
 
-[This deployment guide](https://github.com/hansfrederickbrown/liveramp-aws-transcoding-public/blob/patch-1/docs/AWS%20Embedded%20Transcoder%20Deployment%20Guide.pdf)This deployment guide details how to initialize the appliance using a CloudFormation template, walks you through authentication, and describes how to call the transcoding service. The document walks through additional details on the architecture and design, and provides additional resources for review.
+[This deployment guide](https://github.com/hansfrederickbrown/liveramp-aws-transcoding-public/blob/patch-1/docs/AWS%20Embedded%20Transcoder%20Deployment%20Guide.pdf) details how to initialize the appliance using a CloudFormation template, walks you through authentication, and describes how to call the transcoding service. The document walks through additional details on the architecture and design, and provides additional resources for review.
 The steps for deploying LiveRamp’s Embedded Transcoder are:
 
 1. Subscribe to LiveRamp’s Embedded Transcoder product through the AWS Marketplace.
