@@ -272,7 +272,7 @@ The auth_token performs the following operations when called by SM Proxy auth se
 A cURL request for the auth_token would take the following format:
 
 
-    curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Stage/token/request' \
+    curl --location --request POST 'https://<hostname>.execute-api.<region>.amazonaws.com/Stage/token/request' \
 
 
     --header 'Content-Type: application/json' \
@@ -284,10 +284,10 @@ A cURL request for the auth_token would take the following format:
         "httpMethod": "POST",
 
 
-        "client_id": "&lt;insert client id here>",
+        "client_id": "<insert client id here>",
 
 
-        "client_secret": "&lt;insert client secret here>"
+        "client_secret": "<insert client secret here>"
 
 
     }'
@@ -307,7 +307,7 @@ The init_token LiveRamp Lambda function performs the following operations when c
 The cURL request for the init_token is:
 
 
-    curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Stage/token/init' \
+    curl --location --request POST 'https://<hostname>.execute-api.<region>.amazonaws.com/Stage/token/init' \
 
 
     --header 'Content-Type: application/json' \
@@ -319,10 +319,10 @@ The cURL request for the init_token is:
         "httpMethod": "POST",
 
 
-        "client_id": "&lt;insert client id here>",
+        "client_id": "<insert client id here>",
 
 
-        "client_secret": "&lt;insert client secret here>"
+        "client_secret": "<insert client secret here>"
 
 
     }'
@@ -373,7 +373,7 @@ The request_auth steps performed when RPC is refresh includes the following:
 The cURL call to the request_auth Lambda function is:
 
 
-    curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Stage/auth/request' \
+    curl --location --request POST 'https://<hostname>.execute-api.<region>.amazonaws.com/Stage/auth/request' \
 
 
     --header 'Content-Type: application/json' \
@@ -385,10 +385,10 @@ The cURL call to the request_auth Lambda function is:
         "httpMethod": "POST",
 
 
-        "client_id": "&lt;insert client id here>",
+        "client_id": "<insert client id here>",
 
 
-        "client_secret":"&lt;insert client secret here>",
+        "client_secret":"<insert client secret here>",
 
 
         "rpc" : "refresh"
@@ -411,7 +411,7 @@ The request_auth execution steps when RPC is the request type is:
 The cURL call to the request_auth Lambda function is:
 
 
-    curl --location --request POST https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Stage/auth/request' \
+    curl --location --request POST https://<hostname>.execute-api.<region>.amazonaws.com/Stage/auth/request' \
 
 
     --header 'Content-Type: application/json' \
@@ -426,7 +426,7 @@ The cURL call to the request_auth Lambda function is:
         "transcode_data" : [],
 
 
-        "smart_token" : "&lt;insert smart token here",
+        "smart_token" : "insert smart token here",
 
 
         "rpc" : "request"
@@ -467,7 +467,7 @@ The init_auth execution steps when RPC is set to init are:
 The cURL request for the init_token endpoint in a staging environment is:
 
 
-    curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Stage/auth/init' \
+    curl --location --request POST 'https://<hostname>.execute-api.<region>.amazonaws.com/Stage/auth/init' \
 
 
     --header 'Content-Type: application/json' \
@@ -479,10 +479,10 @@ The cURL request for the init_token endpoint in a staging environment is:
         "httpMethod": "POST",
 
 
-        "client_id": "&lt;insert client id here>",
+        "client_id": "<insert client id here>",
 
 
-        "client_secret": "&lt;insert client secret here>",
+        "client_secret": "<insert client secret here>",
 
 
         "rpc": "init"
@@ -581,7 +581,7 @@ The Embedded Transcoder has two API endpoints: /init and /request. They are docu
    </td>
    <td>
    </td>
-   <td>curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Prod/auth/init' \
+   <td>curl --location --request POST 'https://<hostname>.execute-api.<region>.amazonaws.com/Prod/auth/init' \
 <p>
 --header 'Content-Type: application/json' \
 <p>
@@ -589,9 +589,9 @@ The Embedded Transcoder has two API endpoints: /init and /request. They are docu
 <p>
 "httpMethod": "POST",
 <p>
-"client_id": "&lt;insert client id here>",
+"client_id": "<insert client id here>",
 <p>
-"client_secret": "&lt;insert client secret here>",
+"client_secret": "<insert client secret here>",
 <p>
 "rpc": "init"
 <p>
@@ -759,7 +759,7 @@ To refresh the smart_token: client_id (String); client_secret (String
    </td>
    <td>
    </td>
-   <td>curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Prod/auth/request' \
+   <td>curl --location --request POST 'https://<hostname>.execute-api.<region>.amazonaws.com/Prod/auth/request' \
 <p>
 --header 'Content-Type: application/json' \
 <p>
@@ -767,15 +767,15 @@ To refresh the smart_token: client_id (String); client_secret (String
 <p>
 "httpMethod": "POST",
 <p>
-"client_id": "&lt;insert client id here>",
+"client_id": "<insert client id here>",
 <p>
-"client_secret":"&lt;insert client secret here>",
+"client_secret":"<insert client secret here>",
 <p>
 "rpc" : "refresh"
 <p>
 }'
 <p>
-curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Prod/auth/request' \
+curl --location --request POST 'https://<hostname>.execute-api.<region>.amazonaws.com/Prod/auth/request' \
 <p>
 --header 'Content-Type: application/json' \
 <p>
@@ -785,7 +785,7 @@ curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.am
 <p>
 "transcode_data" : [],
 <p>
-"smart_token" : "&lt;insert smart token here",
+"smart_token" : "insert smart token here",
 <p>
 "rpc" : "request"
 <p>
