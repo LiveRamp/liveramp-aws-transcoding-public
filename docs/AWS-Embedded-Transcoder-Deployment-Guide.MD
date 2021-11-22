@@ -84,14 +84,12 @@ The Embedded Transcoder allows you to connect your LiveRamp identities with exte
 The LiveRamp Embedded Transcoder is deployed by running a CloudFormation template in AWS using the /init endpoint, as shown in Figure 1 below. This template stands up two Virtual Private Clouds, one for the customer and a second for LiveRamp’s ID-API authentication. To obtain the needed credentials in the form of a Java Web Token (JWT) a call is made to the /auth endpoint. The session token is valid for 15 minutes from issuance. The third service call is to the /request endpoint, which passes the token and specifies the data to be processed.
 
 
-
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image1.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![Figure 1](Images/image1.png)
 
 
 **Figure 1**. _AWS Transcoder system diagram._
+
+
 
 Figure 2 below shows the steps involved in authentication and initialization of the transcoding process from a client/server perspective. The first step deploys the template in CloudFormation to create the system shown above. To initialize the system a service call is made to the /init endpoint. The next step is to authenticate the client by placing a service call to the /auth endpoint, which returns a JWT token. A request for transcoding is made to the /request endpoint passing the JWT, setting the RPC parameter to request, and specifying the Ramp IDs to be transcoded into the new domain.
 
@@ -99,20 +97,14 @@ Figure 2 below shows the steps involved in authentication and initialization of 
     **NOTE**: _ In Figures 2-4 the sequence of events goes from the top to the bottom_.
 
 
-
-<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image2.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![Figure 2](Images/image2.png)
 
 
 **Figure 2**. _Authentication and initialization of the transcoding process_.
 
+
+
 In Figure 3 below the actual request, the process is illustrated. Authentication, initialization, and transcoding operations are performed as long as the system is initialized less than 24 hours before the request. The session token expires after 15 minutes, after which a refresh request for a new token must be issued.
-
-
-
-<p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image3.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
 ![Figure 3](Images/image3.png "image_tooltip")
@@ -120,17 +112,16 @@ In Figure 3 below the actual request, the process is illustrated. Authentication
 
 **Figure 3**. _A schematic of the transcode request process_.
 
+
+
 Figure 4 below shows the schematic for a refresh request.
-
-
-
-<p id="gdcalert4" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image4.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert5">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
 ![Figure 4](Images/image4.png "image_tooltip")
 
 
 **Figure 4**. _The transcode refresh request process_.
+
 
 
 ## CloudFormation
@@ -152,10 +143,6 @@ To deploy the AWS Embedded Transcoder, do the following:
 3. Log into an AWS CloudFormation account that allows the user to create stacks from project templates and click on Stacks in the navigation pane as shown in Figure 5 below.
 
 
-
-<p id="gdcalert5" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image5.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert6">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![Figure 5](Images/image5.png "image_tooltip")
 
 
@@ -167,10 +154,6 @@ To deploy the AWS Embedded Transcoder, do the following:
 5. On the Create Stack page shown in Figure 6 below select the Template source (Amazon S3 URL or Upload a template file), click the Choose file button, select your template file, and then click the Next button.
 
 
-
-<p id="gdcalert6" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image6.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert7">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![Figure 6](Images/image6.png "image_tooltip")
 
 
@@ -179,10 +162,6 @@ To deploy the AWS Embedded Transcoder, do the following:
 
 
 6. On the Specify stack details page, shown in Figure 7 below, enter the name of your new transcoder deployment, then click the Next button.
-
-
-
-<p id="gdcalert7" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image7.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert8">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
 ![Figure 7](Images/image7.png "image_tooltip")
@@ -196,14 +175,12 @@ To deploy the AWS Embedded Transcoder, do the following:
 8. Complete the wizard by scrolling down to the Capabilities section and enabling the **I acknowledge that AWS CloudFormation might create IAM resources **check box; then click the Create stack button as shown in Figure 8 below.
 
 
-
-<p id="gdcalert8" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image8.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert9">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![Figure 8](Images/image8.png "image_tooltip")
 
 
 **Figure 8**._ Enable the acknowledgment and click the Create stack button to initiate the deployment._
+
+
 
 When the wizard closes you are returned to the Stacks section and the new deployment will be listed as the latest event, along with its status as CREATE_IN_PROGRESS. The staging time is variable, depending on several factors such as datacenter used, network traffic, the template that you chose, and more. A typical deployment will take from about 7 to 15 minutes and completion changes the status of the deployment to CREATE_COMPLETE.
 
@@ -213,24 +190,18 @@ When the wizard closes you are returned to the Stacks section and the new deploy
 When the deployment is complete all of the resources will show a CREATE_COMPLETE status as shown in Figure 9 below. The Endpoint resource is the last resource to be completed.
 
 
-
-<p id="gdcalert9" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image9.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert10">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![Figure 9](Images/image9.png "image_tooltip")
 
 
 **Figure 9**. _All of the completed resources for the transcoder deployment are shown here_.
+
+
 
 To determine the transcoder endpoints from the AWS API Gateway:
 
 
 
 1. Log into AWS API Gateway and select the transcoder deployment from the list of the available APIs as shown in Figure 10 below.
-
-
-
-<p id="gdcalert10" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image10.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert11">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
 ![Figure 10](Images/image10.png "image_tooltip")
@@ -241,10 +212,6 @@ To determine the transcoder endpoints from the AWS API Gateway:
 
 
 2. On the Resources page click on the Stages link in the left hand navigation pane, as shown in Figure 11 below.
-
-
-
-<p id="gdcalert11" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image11.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert12">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
 ![Figure 11](Images/image11.png "image_tooltip")
@@ -259,15 +226,11 @@ To determine the transcoder endpoints from the AWS API Gateway:
     The URL to invoke the endpoint is listed in the blue stripe at the top of the page shown boxed in red.
 
 
-
-
-<p id="gdcalert12" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image12.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert13">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![Figure 12](Images/image12.png "image_tooltip")
 
 
 **Figure 12**. _The Invoke URL endpoint appears in the Stages section for each method_.
+
 
 
     **CAUTION**: _The creation of a stack deploys AWS resources that generate charges for an organization. You should use the template that is the appropriate size, and delete stacks when the work is completed to minimize your costs._
@@ -280,14 +243,11 @@ To delete the transcoder deployment:
 2. Select the deployment stack and click on the Delete button, as shown in Figure 13 below.
 
 
-
-<p id="gdcalert13" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image13.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert14">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![Figure 13](Images/image13.png "image_tooltip")
 
 
 **Figure 13**. _To delete the transcoder, delete its stack in CloudFormation_.
+
 
 
 ## 
@@ -312,7 +272,7 @@ The auth_token performs the following operations when called by SM Proxy auth se
 A cURL request for the auth_token would take the following format:
 
 
-    curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Stage/token/request' \
+    curl --location --request POST 'https://<hostname>.execute-api.<region>.amazonaws.com/Stage/token/request' \
 
 
     --header 'Content-Type: application/json' \
@@ -324,10 +284,10 @@ A cURL request for the auth_token would take the following format:
         "httpMethod": "POST",
 
 
-        "client_id": "&lt;insert client id here>",
+        "client_id": "<insert client id here>",
 
 
-        "client_secret": "&lt;insert client secret here>"
+        "client_secret": "<insert client secret here>"
 
 
     }'
@@ -347,7 +307,7 @@ The init_token LiveRamp Lambda function performs the following operations when c
 The cURL request for the init_token is:
 
 
-    curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Stage/token/init' \
+    curl --location --request POST 'https://<hostname>.execute-api.<region>.amazonaws.com/Stage/token/init' \
 
 
     --header 'Content-Type: application/json' \
@@ -359,10 +319,10 @@ The cURL request for the init_token is:
         "httpMethod": "POST",
 
 
-        "client_id": "&lt;insert client id here>",
+        "client_id": "<insert client id here>",
 
 
-        "client_secret": "&lt;insert client secret here>"
+        "client_secret": "<insert client secret here>"
 
 
     }'
@@ -413,7 +373,7 @@ The request_auth steps performed when RPC is refresh includes the following:
 The cURL call to the request_auth Lambda function is:
 
 
-    curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Stage/auth/request' \
+    curl --location --request POST 'https://<hostname>.execute-api.<region>.amazonaws.com/Stage/auth/request' \
 
 
     --header 'Content-Type: application/json' \
@@ -425,10 +385,10 @@ The cURL call to the request_auth Lambda function is:
         "httpMethod": "POST",
 
 
-        "client_id": "&lt;insert client id here>",
+        "client_id": "<insert client id here>",
 
 
-        "client_secret":"&lt;insert client secret here>",
+        "client_secret":"<insert client secret here>",
 
 
         "rpc" : "refresh"
@@ -451,7 +411,7 @@ The request_auth execution steps when RPC is the request type is:
 The cURL call to the request_auth Lambda function is:
 
 
-    curl --location --request POST https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Stage/auth/request' \
+    curl --location --request POST https://<hostname>.execute-api.<region>.amazonaws.com/Stage/auth/request' \
 
 
     --header 'Content-Type: application/json' \
@@ -466,7 +426,7 @@ The cURL call to the request_auth Lambda function is:
         "transcode_data" : [],
 
 
-        "smart_token" : "&lt;insert smart token here",
+        "smart_token" : "insert smart token here",
 
 
         "rpc" : "request"
@@ -507,7 +467,7 @@ The init_auth execution steps when RPC is set to init are:
 The cURL request for the init_token endpoint in a staging environment is:
 
 
-    curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Stage/auth/init' \
+    curl --location --request POST 'https://<hostname>.execute-api.<region>.amazonaws.com/Stage/auth/init' \
 
 
     --header 'Content-Type: application/json' \
@@ -519,10 +479,10 @@ The cURL request for the init_token endpoint in a staging environment is:
         "httpMethod": "POST",
 
 
-        "client_id": "&lt;insert client id here>",
+        "client_id": "<insert client id here>",
 
 
-        "client_secret": "&lt;insert client secret here>",
+        "client_secret": "<insert client secret here>",
 
 
         "rpc": "init"
@@ -621,7 +581,7 @@ The Embedded Transcoder has two API endpoints: /init and /request. They are docu
    </td>
    <td>
    </td>
-   <td>curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Prod/auth/init' \
+   <td>curl --location --request POST 'https://<hostname>.execute-api.<region>.amazonaws.com/Prod/auth/init' \
 <p>
 --header 'Content-Type: application/json' \
 <p>
@@ -629,9 +589,9 @@ The Embedded Transcoder has two API endpoints: /init and /request. They are docu
 <p>
 "httpMethod": "POST",
 <p>
-"client_id": "&lt;insert client id here>",
+"client_id": "<insert client id here>",
 <p>
-"client_secret": "&lt;insert client secret here>",
+"client_secret": "<insert client secret here>",
 <p>
 "rpc": "init"
 <p>
@@ -799,7 +759,7 @@ To refresh the smart_token: client_id (String); client_secret (String
    </td>
    <td>
    </td>
-   <td>curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Prod/auth/request' \
+   <td>curl --location --request POST 'https://<hostname>.execute-api.<region>.amazonaws.com/Prod/auth/request' \
 <p>
 --header 'Content-Type: application/json' \
 <p>
@@ -807,15 +767,15 @@ To refresh the smart_token: client_id (String); client_secret (String
 <p>
 "httpMethod": "POST",
 <p>
-"client_id": "&lt;insert client id here>",
+"client_id": "<insert client id here>",
 <p>
-"client_secret":"&lt;insert client secret here>",
+"client_secret":"<insert client secret here>",
 <p>
 "rpc" : "refresh"
 <p>
 }'
 <p>
-curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.amazonaws.com/Prod/auth/request' \
+curl --location --request POST 'https://<hostname>.execute-api.<region>.amazonaws.com/Prod/auth/request' \
 <p>
 --header 'Content-Type: application/json' \
 <p>
@@ -825,7 +785,7 @@ curl --location --request POST 'https://&lt;hostname>.execute-api.&lt;region>.am
 <p>
 "transcode_data" : [],
 <p>
-"smart_token" : "&lt;insert smart token here",
+"smart_token" : "insert smart token here",
 <p>
 "rpc" : "request"
 <p>
