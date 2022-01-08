@@ -96,7 +96,7 @@ Resources:
         - SMProxyInitAuthFunctionRole
         - Arn
       Timeout: 30
-      MemorySize: 512
+      MemorySize: 1024
       Runtime: python3.8
   ServerlessRestApiDeploymentacb990f6c9:
     Type: 'AWS::ApiGateway::Deployment'
@@ -212,7 +212,7 @@ Resources:
           SAGEMAKER_ENDPOINT: !GetAtt Endpoint.EndpointName
           AWS_REGION_FOR_SECRETS: us-east-2
           PUBLIC_KEY_FOR_DECODING: !Ref PublicKeyForDecoding
-          NUMBER_OF_VARIANTS: 1
+          NUMBER_OF_VARIANTS: 5
           ENVIRONMENT: Prod
       Tags:
         - Value: SAM
@@ -222,7 +222,7 @@ Resources:
         - SMProxyRequestAuthFunctionRole
         - Arn
       Timeout: 30
-      MemorySize: 512
+      MemorySize: 1024
       Runtime: python3.8
   SMProxyGetMetricsFunction:
     Type: 'AWS::Lambda::Function'
@@ -245,7 +245,7 @@ Resources:
         - SMProxyGetMetricsFunctionRole
         - Arn
       Timeout: 30
-      MemorySize: 512
+      MemorySize: 1024
       Runtime: python3.8
   ScheduledRule:
     Type: AWS::Events::Rule
