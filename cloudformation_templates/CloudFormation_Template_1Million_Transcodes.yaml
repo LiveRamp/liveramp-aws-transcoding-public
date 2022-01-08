@@ -47,7 +47,6 @@ Resources:
         ModelPackageName: !Ref ProductARN
       ExecutionRoleArn: !GetAtt ExecutionRole.Arn
       EnableNetworkIsolation: true
-
   ExecutionRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -79,7 +78,7 @@ Resources:
     Properties:
       Code:
         S3Bucket: us-liveramp-smproxy-client-9fdd04d3029327b0a220b570e9e998c
-        S3Key: SMProxy-Embedded-Transcoder/d267beb65dbff2d48e580de10687377e
+        S3Key: SMProxy-Embedded-Transcoder/b3779334ad2c9b846d6ddb5769dac676
       Environment:
         Variables:
           SM_AUTH_REQUEST_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/token/request
@@ -88,6 +87,7 @@ Resources:
           AWS_REGION_FOR_SECRETS: us-east-2
           PUBLIC_KEY_FOR_DECODING: !Ref PublicKeyForDecoding
           NUMBER_OF_VARIANTS: 5
+          ENVIRONMENT: Prod
       Tags:
         - Value: SAM
           Key: 'lambda:createdBy'
@@ -96,7 +96,7 @@ Resources:
         - SMProxyInitAuthFunctionRole
         - Arn
       Timeout: 30
-      MemorySize: 1024
+      MemorySize: 512
       Runtime: python3.8
   ServerlessRestApiDeploymentacb990f6c9:
     Type: 'AWS::ApiGateway::Deployment'
@@ -153,6 +153,24 @@ Resources:
       Tags:
         - Value: SAM
           Key: 'lambda:createdBy'
+  SMProxyGetMetricsFunctionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - 'sts:AssumeRole'
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - 'arn:aws:iam::aws:policy/AmazonSageMakerFullAccess'
+      Tags:
+        - Value: SAM
+          Key: 'lambda:createdBy'
   ServerlessRestApi:
     Type: 'AWS::ApiGateway::RestApi'
     Properties:
@@ -186,7 +204,7 @@ Resources:
     Properties:
       Code:
         S3Bucket: us-liveramp-smproxy-client-9fdd04d3029327b0a220b570e9e998c
-        S3Key: SMProxy-Embedded-Transcoder/d267beb65dbff2d48e580de10687377e
+        S3Key: SMProxy-Embedded-Transcoder/b3779334ad2c9b846d6ddb5769dac676
       Environment:
         Variables:
           SM_AUTH_REQUEST_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/token/request
@@ -194,7 +212,8 @@ Resources:
           SAGEMAKER_ENDPOINT: !GetAtt Endpoint.EndpointName
           AWS_REGION_FOR_SECRETS: us-east-2
           PUBLIC_KEY_FOR_DECODING: !Ref PublicKeyForDecoding
-          NUMBER_OF_VARIANTS: 5
+          NUMBER_OF_VARIANTS: 1
+          ENVIRONMENT: Prod
       Tags:
         - Value: SAM
           Key: 'lambda:createdBy'
@@ -203,8 +222,54 @@ Resources:
         - SMProxyRequestAuthFunctionRole
         - Arn
       Timeout: 30
-      MemorySize: 1024
+      MemorySize: 512
       Runtime: python3.8
+  SMProxyGetMetricsFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Code:
+        S3Bucket: us-liveramp-smproxy-client-9fdd04d3029327b0a220b570e9e998c
+        S3Key: SMProxy-Embedded-Transcoder/b3779334ad2c9b846d6ddb5769dac676
+      Environment:
+        Variables:
+          SM_AUTH_METRICS_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/metrics
+          SAGEMAKER_ENDPOINT: !GetAtt Endpoint.EndpointName
+          NUMBER_OF_VARIANTS: 5
+          SAGEMAKER_METRICS_COUNT: 1
+          ENVIRONMENT: Prod
+      Tags:
+        - Value: SAM
+          Key: 'lambda:createdBy'
+      Handler: src.main.get_metrics.lambda_handler
+      Role: !GetAtt
+        - SMProxyGetMetricsFunctionRole
+        - Arn
+      Timeout: 30
+      MemorySize: 512
+      Runtime: python3.8
+  ScheduledRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: "GetMetricsCloudWatchEventRule"
+      ScheduleExpression: "rate(1 minute)"
+      State: "ENABLED"
+      Targets:
+        -
+          Arn:
+            Fn::GetAtt:
+              - "SMProxyGetMetricsFunction"
+              - "Arn"
+          Id: "SMProxyGetMetricsFunction"
+  PermissionForEventsToInvokeLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref "SMProxyGetMetricsFunction"
+      Action: "lambda:InvokeFunction"
+      Principal: "events.amazonaws.com"
+      SourceArn:
+        Fn::GetAtt:
+          - "ScheduledRule"
+          - "Arn"
   PublicKeyForDecoding:
     Type: 'AWS::SecretsManager::Secret'
     Properties:
@@ -244,24 +309,34 @@ Outputs:
     Value: !GetAtt
       - SMProxyRequestAuthFunctionRole
       - Arn
+  SMProxyGetMetricsFunction:
+    Description: SMProxy Get metrics Lambda Function ARN
+    Value: !GetAtt
+      - SMProxyGetMetricsFunction
+      - Arn
+  SMProxyGetMetricsIamRole:
+    Description: Implicit IAM Role created for SMProxyGetMetrics function
+    Value: !GetAtt
+      - SMProxyGetMetricsFunctionRole
+      - Arn
 
-## To make the SMProxy API Gateway Private, create a VPCE ID and replace the above API endpoint configuration with the YAML below with the VPCE ID
-#      EndpointConfiguration:
-#        Types:
-#          - PRIVATE
-#      Policy:
-#        Version: "2012-10-17"
-#        Statement:
-#          -
-#            Effect: Deny
-#            Principal: '*'
-#            Action: 'execute-api:Invoke'
-#            Resource: 'execute-api:/*'
-#            Condition:
-#              StringNotEquals:
-#                'aws:sourceVpce': '{{vpceID}}'
-#          -
-#            Effect: Allow
-#            Principal: '*'
-#            Action: 'execute-api:Invoke'
-#            Resource: 'execute-api:/*'
+  ## To make the SMProxy API Gateway Private, create a VPCE ID and replace the above API endpoint configuration with the YAML below with the VPCE ID
+  #      EndpointConfiguration:
+  #        Types:
+  #          - PRIVATE
+  #      Policy:
+  #        Version: "2012-10-17"
+  #        Statement:
+  #          -
+  #            Effect: Deny
+  #            Principal: '*'
+  #            Action: 'execute-api:Invoke'
+  #            Resource: 'execute-api:/*'
+  #            Condition:
+  #              StringNotEquals:
+  #                'aws:sourceVpce': '{{vpceID}}'
+  #          -
+  #            Effect: Allow
+  #            Principal: '*'
+  #            Action: 'execute-api:Invoke'
+  #            Resource: 'execute-api:/*'
