@@ -234,7 +234,7 @@ Resources:
         Variables:
           SM_AUTH_METRICS_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/metrics
           SAGEMAKER_ENDPOINT: !GetAtt Endpoint.EndpointName
-          NUMBER_OF_VARIANTS: 5
+          NUMBER_OF_VARIANTS: 1
           SAGEMAKER_METRICS_COUNT: 1
           ENVIRONMENT: Prod
       Tags:
