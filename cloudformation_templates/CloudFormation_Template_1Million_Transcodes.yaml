@@ -78,7 +78,7 @@ Resources:
     Properties:
       Code:
         S3Bucket: us-liveramp-smproxy-client-9fdd04d3029327b0a220b570e9e998c
-        S3Key: SMProxy-Embedded-Transcoder/b3779334ad2c9b846d6ddb5769dac676
+        S3Key: SMProxy-Embedded-Transcoder/770a0b27df832e3a9eaa2d9389c50a4c
       Environment:
         Variables:
           SM_AUTH_REQUEST_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/token/request
@@ -96,7 +96,7 @@ Resources:
         - SMProxyInitAuthFunctionRole
         - Arn
       Timeout: 30
-      MemorySize: 1024
+      MemorySize: 512
       Runtime: python3.8
   ServerlessRestApiDeploymentacb990f6c9:
     Type: 'AWS::ApiGateway::Deployment'
@@ -204,7 +204,7 @@ Resources:
     Properties:
       Code:
         S3Bucket: us-liveramp-smproxy-client-9fdd04d3029327b0a220b570e9e998c
-        S3Key: SMProxy-Embedded-Transcoder/b3779334ad2c9b846d6ddb5769dac676
+        S3Key: SMProxy-Embedded-Transcoder/770a0b27df832e3a9eaa2d9389c50a4c
       Environment:
         Variables:
           SM_AUTH_REQUEST_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/token/request
@@ -212,7 +212,7 @@ Resources:
           SAGEMAKER_ENDPOINT: !GetAtt Endpoint.EndpointName
           AWS_REGION_FOR_SECRETS: us-east-2
           PUBLIC_KEY_FOR_DECODING: !Ref PublicKeyForDecoding
-          NUMBER_OF_VARIANTS: 5
+          NUMBER_OF_VARIANTS: 1
           ENVIRONMENT: Prod
       Tags:
         - Value: SAM
@@ -222,19 +222,19 @@ Resources:
         - SMProxyRequestAuthFunctionRole
         - Arn
       Timeout: 30
-      MemorySize: 1024
+      MemorySize: 512
       Runtime: python3.8
   SMProxyGetMetricsFunction:
     Type: 'AWS::Lambda::Function'
     Properties:
       Code:
         S3Bucket: us-liveramp-smproxy-client-9fdd04d3029327b0a220b570e9e998c
-        S3Key: SMProxy-Embedded-Transcoder/b3779334ad2c9b846d6ddb5769dac676
+        S3Key: SMProxy-Embedded-Transcoder/770a0b27df832e3a9eaa2d9389c50a4c
       Environment:
         Variables:
           SM_AUTH_METRICS_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/metrics
           SAGEMAKER_ENDPOINT: !GetAtt Endpoint.EndpointName
-          NUMBER_OF_VARIANTS: 5
+          NUMBER_OF_VARIANTS: 1
           SAGEMAKER_METRICS_COUNT: 1
           ENVIRONMENT: Prod
       Tags:
@@ -245,7 +245,7 @@ Resources:
         - SMProxyGetMetricsFunctionRole
         - Arn
       Timeout: 30
-      MemorySize: 1024
+      MemorySize: 512
       Runtime: python3.8
   ScheduledRule:
     Type: AWS::Events::Rule
@@ -274,7 +274,7 @@ Resources:
     Type: 'AWS::SecretsManager::Secret'
     Properties:
       Description: Public Key used for validating the token signature from SM Auth
-      SecretString: "-----BEGIN PUBLIC KEY-----\nMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAxJ94urDtMYOIZPkXVtMN\nXDIo0D9xuhv64bfv2QPZd0UyNIP29NGzxBaQ8yyB1px34KauVowHTXTdjL9aRAK5\nl12t+K/gyUEvAfDtFfuzlQb34L0hxbTvLTHBOecVdzdrVKbK9uTxeeksZu+AZ+wK\ndvh0KeTbXbvOGG1xzZ/CGpTENNqfV6lcv6cJnl/PCySz1cFjor7BnKGRMyc6A93g\njQfvSKOzj+rIs+EUY4lZgmsd+nCjuKAWjoODQ9PWEVpOyloxJkX1SRLA3zFU7Q80\nfxOQyhWyQ4t/vKmgO0L4l7paBcR+hnsvP76Z+Os3uYFJ29Tg660N++T/3MUsrZBo\nvC9MtaWvLrLx7wMis9gvdQ6F/zvTQVmvpvDGA3mINYC3Pog+76lDS1cKwpGp0j67\n8l/81zEZIq9vG6I15t1jguPGoeMqdwnm1lRss258sN6SVsNOQhVhrsJFVgrMJQLJ\nh6aegQMuuH6UrO8Bzqy9NTtTitKDKRZsppjN4NGYZNidAgMBAAE=\n-----END PUBLIC KEY-----"
+      SecretString: "-----BEGIN PUBLIC KEY-----\nMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEA8l3oF2OWUJO0Zv71ICT0\nwW4SL8nkHbm8AecbZp1/edde/bfwrfNQd5AMFOCBSQQP275V6thFu353dbuJ85vX\ntXfN2tWIzQKnIxidAqw6xhaiq4k/9cHzdNNySpQCnrzyv9AMBpo2NYKRq3HstmtC\nkvgnBKmRv8RputTgobitVIHudkATDvrMdV5PE2TedJmQYolwnywT+YPx2+6ayOnR\nJ36EU9z5EDtu0osek+gNCprFLLrX2jewDG6pbmdcrqTEVYdzqKVqW6C+s10C/9g4\n9vddCn2U1OwaMIm7iQUalKcx/dGp5HTbUlumE+QlGOZiQ6YpgaHYuSODYMDEvvyC\nIk5bn7EU3Y6oNQNF+1aCueeeg8c/LrSi7vHwCHLHfsfu6FcaI9xVf+9NtpUrlJst\n+iDPLoicTSeUSR53zO+BF2paPOAnkfykTbpbkS2M1L+RfL3j4+ZtRhwXoJ165XS0\nY4wr978P2GnKuhpeZ4BU7ZEg6T0qSL/9AMWb5SPrmk0/AgMBAAE=\n-----END PUBLIC KEY-----"
 
 Outputs:
   EndpointId:
