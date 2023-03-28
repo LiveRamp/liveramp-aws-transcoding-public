@@ -59,7 +59,7 @@ Resources:
     Properties:
       Code:
         S3Bucket: us-liveramp-smproxy-client-9fdd04d3029327b0a220b570e9e998c
-        S3Key: SMProxy-Embedded-Transcoder/770a0b27df832e3a9eaa2d9389c50a4c
+        S3Key: SMProxy-Embedded-Transcoder/3daf51379e238529a613be4ac18e8d41
       Environment:
         Variables:
           SM_AUTH_REQUEST_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/token/request
@@ -185,7 +185,7 @@ Resources:
     Properties:
       Code:
         S3Bucket: us-liveramp-smproxy-client-9fdd04d3029327b0a220b570e9e998c
-        S3Key: SMProxy-Embedded-Transcoder/770a0b27df832e3a9eaa2d9389c50a4c
+        S3Key: SMProxy-Embedded-Transcoder/3daf51379e238529a613be4ac18e8d41
       Environment:
         Variables:
           SM_AUTH_REQUEST_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/token/request
@@ -210,7 +210,7 @@ Resources:
     Properties:
       Code:
         S3Bucket: us-liveramp-smproxy-client-9fdd04d3029327b0a220b570e9e998c
-        S3Key: SMProxy-Embedded-Transcoder/770a0b27df832e3a9eaa2d9389c50a4c
+        S3Key: SMProxy-Embedded-Transcoder/3daf51379e238529a613be4ac18e8d41
       Environment:
         Variables:
           SM_AUTH_METRICS_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/metrics
