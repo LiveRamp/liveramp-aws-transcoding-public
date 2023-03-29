@@ -58,14 +58,14 @@ Resources:
     Type: 'AWS::Lambda::Function'
     Properties:
       Code:
-        S3Bucket: us-liveramp-smproxy-client-9fdd04d3029327b0a220b570e9e998c
+        S3Bucket: us-liveramp-smproxy-client-593285859935bd8378e28380h
         S3Key: SMProxy-Embedded-Transcoder/3daf51379e238529a613be4ac18e8d41
       Environment:
         Variables:
           SM_AUTH_REQUEST_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/token/request
           SM_AUTH_INIT_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/token/init
           SAGEMAKER_ENDPOINT: !GetAtt Endpoint.EndpointName
-          AWS_REGION_FOR_SECRETS: us-east-2
+          AWS_REGION_FOR_SECRETS: us-west-1
           PUBLIC_KEY_FOR_DECODING: !Ref PublicKeyForDecoding
           NUMBER_OF_VARIANTS: 1
           ENVIRONMENT: Prod
@@ -184,14 +184,14 @@ Resources:
     Type: 'AWS::Lambda::Function'
     Properties:
       Code:
-        S3Bucket: us-liveramp-smproxy-client-9fdd04d3029327b0a220b570e9e998c
+        S3Bucket: us-liveramp-smproxy-client-593285859935bd8378e28380h
         S3Key: SMProxy-Embedded-Transcoder/3daf51379e238529a613be4ac18e8d41
       Environment:
         Variables:
           SM_AUTH_REQUEST_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/token/request
           SM_AUTH_INIT_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/token/init
           SAGEMAKER_ENDPOINT: !GetAtt Endpoint.EndpointName
-          AWS_REGION_FOR_SECRETS: us-east-2
+          AWS_REGION_FOR_SECRETS: us-west-1
           PUBLIC_KEY_FOR_DECODING: !Ref PublicKeyForDecoding
           NUMBER_OF_VARIANTS: 1
           ENVIRONMENT: Prod
@@ -209,7 +209,7 @@ Resources:
     Type: 'AWS::Lambda::Function'
     Properties:
       Code:
-        S3Bucket: us-liveramp-smproxy-client-9fdd04d3029327b0a220b570e9e998c
+        S3Bucket: us-liveramp-smproxy-client-593285859935bd8378e28380h
         S3Key: SMProxy-Embedded-Transcoder/3daf51379e238529a613be4ac18e8d41
       Environment:
         Variables:
