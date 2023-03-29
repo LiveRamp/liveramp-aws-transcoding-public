@@ -1,0 +1,323 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "Cloudformation template for LiveRamp's Embedded Transcoder in AWS - 10K Transcodes per second"
+Parameters:
+  ProductARN:
+    Type: String
+    Default: 'Enter the ProductARN of the subscribed product here'
+    Description: Product identifier based on software version and region.
+Resources:
+  Endpoint:
+    Type: "AWS::SageMaker::Endpoint"
+    Properties:
+      EndpointConfigName:
+        !GetAtt EndpointConfig.EndpointConfigName
+  EndpointConfig:
+    Type: "AWS::SageMaker::EndpointConfig"
+    Properties:
+      ProductionVariants:
+        - InitialInstanceCount: 1
+          InitialVariantWeight: 1.0
+          InstanceType: ml.c5.large
+          ModelName: !GetAtt Model.ModelName
+          VariantName: variant-name-1
+  Model:
+    Type: "AWS::SageMaker::Model"
+    Properties:
+      PrimaryContainer:
+        ModelPackageName: !Ref ProductARN
+      ExecutionRoleArn: !GetAtt ExecutionRole.Arn
+      EnableNetworkIsolation: true
+  ExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "sagemaker.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AmazonSageMakerFullAccess'
+      Path: "/"
+  SMProxyRequestAuthFunctionSMProxyPermissionProd:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      Principal: apigateway.amazonaws.com
+      FunctionName: !Ref SMProxyRequestAuthFunction
+      SourceArn: !Sub
+        - >-
+          arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${__ApiId__}/${__Stage__}/POST/auth/request
+        - __Stage__: Prod
+          __ApiId__: !Ref ServerlessRestApi
+  SMProxyInitAuthFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Code:
+        S3Bucket: us-liveramp-smproxy-client-2139293924948bfea645905606
+        S3Key: SMProxy-Embedded-Transcoder/3daf51379e238529a613be4ac18e8d41
+      Environment:
+        Variables:
+          SM_AUTH_REQUEST_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/token/request
+          SM_AUTH_INIT_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/token/init
+          SAGEMAKER_ENDPOINT: !GetAtt Endpoint.EndpointName
+          AWS_REGION_FOR_SECRETS: us-west-2
+          PUBLIC_KEY_FOR_DECODING: !Ref PublicKeyForDecoding
+          NUMBER_OF_VARIANTS: 1
+          ENVIRONMENT: Prod
+      Tags:
+        - Value: SAM
+          Key: 'lambda:createdBy'
+      Handler: src.main.init_auth.lambda_handler
+      Role: !GetAtt
+        - SMProxyInitAuthFunctionRole
+        - Arn
+      Timeout: 30
+      MemorySize: 512
+      Runtime: python3.8
+  ServerlessRestApiDeploymentacb990f6c9:
+    Type: 'AWS::ApiGateway::Deployment'
+    Properties:
+      RestApiId: !Ref ServerlessRestApi
+      Description: 'RestApi deployment id: acb990f6c957edfd30a31b665329c9cbc38a62b6'
+      StageName: Prod
+  SMProxyInitAuthFunctionSMProxyPermissionProd:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      Principal: apigateway.amazonaws.com
+      FunctionName: !Ref SMProxyInitAuthFunction
+      SourceArn: !Sub
+        - >-
+          arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${__ApiId__}/${__Stage__}/POST/auth/init
+        - __Stage__: Prod
+          __ApiId__: !Ref ServerlessRestApi
+  SMProxyInitAuthFunctionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - 'sts:AssumeRole'
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - 'arn:aws:iam::aws:policy/SecretsManagerReadWrite'
+        - 'arn:aws:iam::aws:policy/AmazonSageMakerFullAccess'
+      Tags:
+        - Value: SAM
+          Key: 'lambda:createdBy'
+  SMProxyRequestAuthFunctionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - 'sts:AssumeRole'
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - 'arn:aws:iam::aws:policy/SecretsManagerReadWrite'
+        - 'arn:aws:iam::aws:policy/AmazonSageMakerFullAccess'
+      Tags:
+        - Value: SAM
+          Key: 'lambda:createdBy'
+  SMProxyGetMetricsFunctionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - 'sts:AssumeRole'
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - 'arn:aws:iam::aws:policy/AmazonSageMakerFullAccess'
+      Tags:
+        - Value: SAM
+          Key: 'lambda:createdBy'
+  ServerlessRestApi:
+    Type: 'AWS::ApiGateway::RestApi'
+    Properties:
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+      Body:
+        info:
+          version: '1.0'
+          title: !Ref 'AWS::StackName'
+        paths:
+          /auth/init:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub >-
+                  arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SMProxyInitAuthFunction.Arn}/invocations
+              responses: {}
+          /auth/request:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub >-
+                  arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SMProxyRequestAuthFunction.Arn}/invocations
+              responses: {}
+        swagger: '2.0'
+  SMProxyRequestAuthFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Code:
+        S3Bucket: us-liveramp-smproxy-client-2139293924948bfea645905606
+        S3Key: SMProxy-Embedded-Transcoder/3daf51379e238529a613be4ac18e8d41
+      Environment:
+        Variables:
+          SM_AUTH_REQUEST_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/token/request
+          SM_AUTH_INIT_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/token/init
+          SAGEMAKER_ENDPOINT: !GetAtt Endpoint.EndpointName
+          AWS_REGION_FOR_SECRETS: us-west-2
+          PUBLIC_KEY_FOR_DECODING: !Ref PublicKeyForDecoding
+          NUMBER_OF_VARIANTS: 1
+          ENVIRONMENT: Prod
+      Tags:
+        - Value: SAM
+          Key: 'lambda:createdBy'
+      Handler: src.main.request_auth.lambda_handler
+      Role: !GetAtt
+        - SMProxyRequestAuthFunctionRole
+        - Arn
+      Timeout: 30
+      MemorySize: 512
+      Runtime: python3.8
+  SMProxyGetMetricsFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Code:
+        S3Bucket: us-liveramp-smproxy-client-2139293924948bfea645905606
+        S3Key: SMProxy-Embedded-Transcoder/3daf51379e238529a613be4ac18e8d41
+      Environment:
+        Variables:
+          SM_AUTH_METRICS_URL: https://us.aws.us-east-2.prod.auth.cloud-native.liveramp.com/v1/metrics
+          SAGEMAKER_ENDPOINT: !GetAtt Endpoint.EndpointName
+          NUMBER_OF_VARIANTS: 1
+          SAGEMAKER_METRICS_COUNT: 1
+          ENVIRONMENT: Prod
+      Tags:
+        - Value: SAM
+          Key: 'lambda:createdBy'
+      Handler: src.main.get_metrics.lambda_handler
+      Role: !GetAtt
+        - SMProxyGetMetricsFunctionRole
+        - Arn
+      Timeout: 30
+      MemorySize: 512
+      Runtime: python3.8
+  ScheduledRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: "GetMetricsCloudWatchEventRule"
+      ScheduleExpression: "rate(1 minute)"
+      State: "ENABLED"
+      Targets:
+        -
+          Arn:
+            Fn::GetAtt:
+              - "SMProxyGetMetricsFunction"
+              - "Arn"
+          Id: "SMProxyGetMetricsFunction"
+  PermissionForEventsToInvokeLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref "SMProxyGetMetricsFunction"
+      Action: "lambda:InvokeFunction"
+      Principal: "events.amazonaws.com"
+      SourceArn:
+        Fn::GetAtt:
+          - "ScheduledRule"
+          - "Arn"
+  PublicKeyForDecoding:
+    Type: 'AWS::SecretsManager::Secret'
+    Properties:
+      Description: Public Key used for validating the token signature from SM Auth
+      SecretString: "-----BEGIN PUBLIC KEY-----\nMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEA8l3oF2OWUJO0Zv71ICT0\nwW4SL8nkHbm8AecbZp1/edde/bfwrfNQd5AMFOCBSQQP275V6thFu353dbuJ85vX\ntXfN2tWIzQKnIxidAqw6xhaiq4k/9cHzdNNySpQCnrzyv9AMBpo2NYKRq3HstmtC\nkvgnBKmRv8RputTgobitVIHudkATDvrMdV5PE2TedJmQYolwnywT+YPx2+6ayOnR\nJ36EU9z5EDtu0osek+gNCprFLLrX2jewDG6pbmdcrqTEVYdzqKVqW6C+s10C/9g4\n9vddCn2U1OwaMIm7iQUalKcx/dGp5HTbUlumE+QlGOZiQ6YpgaHYuSODYMDEvvyC\nIk5bn7EU3Y6oNQNF+1aCueeeg8c/LrSi7vHwCHLHfsfu6FcaI9xVf+9NtpUrlJst\n+iDPLoicTSeUSR53zO+BF2paPOAnkfykTbpbkS2M1L+RfL3j4+ZtRhwXoJ165XS0\nY4wr978P2GnKuhpeZ4BU7ZEg6T0qSL/9AMWb5SPrmk0/AgMBAAE=\n-----END PUBLIC KEY-----"
+
+Outputs:
+  EndpointId:
+    Value: !Ref Endpoint
+  EndpointName:
+    Value: !GetAtt Endpoint.EndpointName
+  SMProxyInitAuthFunction:
+    Description: SMProxy Init Token Lambda Function ARN
+    Value: !GetAtt
+      - SMProxyInitAuthFunction
+      - Arn
+  SMProxyInitAuthApi:
+    Description: API Gateway endpoint URL for SMProxy Init Token
+    Value: !Sub >-
+      https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/SMProxy/token/init
+  SMProxyInitAuthIamRole:
+    Description: Implicit IAM Role created for SMProxyInitToken function
+    Value: !GetAtt
+      - SMProxyInitAuthFunctionRole
+      - Arn
+  SMProxyRequestAuthFunction:
+    Description: SMProxy Request Token Lambda Function ARN
+    Value: !GetAtt
+      - SMProxyRequestAuthFunction
+      - Arn
+  SMProxyRequestAuthApi:
+    Description: API Gateway endpoint URL for SMProxy Request Token
+    Value: !Sub >-
+      https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/SMProxy/token/request
+  SMProxyRequestAuthIamRole:
+    Description: Implicit IAM Role created for SMProxyRequestToken function
+    Value: !GetAtt
+      - SMProxyRequestAuthFunctionRole
+      - Arn
+  SMProxyGetMetricsFunction:
+    Description: SMProxy Get metrics Lambda Function ARN
+    Value: !GetAtt
+      - SMProxyGetMetricsFunction
+      - Arn
+  SMProxyGetMetricsIamRole:
+    Description: Implicit IAM Role created for SMProxyGetMetrics function
+    Value: !GetAtt
+      - SMProxyGetMetricsFunctionRole
+      - Arn
+
+  ## To make the SMProxy API Gateway Private, create a VPCE ID and replace the above API endpoint configuration with the YAML below with the VPCE ID
+  #      EndpointConfiguration:
+  #        Types:
+  #          - PRIVATE
+  #      Policy:
+  #        Version: "2012-10-17"
+  #        Statement:
+  #          -
+  #            Effect: Deny
+  #            Principal: '*'
+  #            Action: 'execute-api:Invoke'
+  #            Resource: 'execute-api:/*'
+  #            Condition:
+  #              StringNotEquals:
+  #                'aws:sourceVpce': '{{vpceID}}'
+  #          -
+  #            Effect: Allow
+  #            Principal: '*'
+  #            Action: 'execute-api:Invoke'
+  #            Resource: 'execute-api:/*'
