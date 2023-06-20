@@ -1,0 +1,14 @@
+# BEGIN TERRAFORM MANAGED BLOCK
+"apiVersion": "backstage.io/v1alpha1"
+"kind": "Location"
+"metadata":
+  "annotations":
+    "github.com/project-slug": "LiveRamp/liveramp-aws-transcoding-public"
+    "github.com/team-slug": "LiveRamp/id-lambda-admins"
+    "jenkins.io/job-full-name": "LiveRamp/liveramp-aws-transcoding-public"
+  "description": "Public repository to house cloudformation and documents for AWS
+    Transcoding Service"
+  "name": "liveramp-aws-transcoding-public"
+  "tags": []
+"spec": {}
+# END TERRAFORM MANAGED BLOCK
